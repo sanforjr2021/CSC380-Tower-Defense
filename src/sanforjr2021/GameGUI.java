@@ -44,6 +44,9 @@ public class GameGUI {
 
     public void subtractLives(Integer lives) {
         this.lives -= lives;
+        if(lives == 0){
+            lost = true;
+        }
     }
 
     public Integer getGold() {
