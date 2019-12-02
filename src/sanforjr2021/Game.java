@@ -18,6 +18,7 @@ public class Game extends JPanel {
     private Integer desiredWindowHeight = 1000;
     private Integer xSpawn, ySpawn, xEnd, yEnd;
     private Grid grid;
+    private GameGUI gameGUI;
     // constructor method from Blase Cindric
     public Game() {
         setPreferredSize(new Dimension(desiredWindowWidth, desiredWindowHeight));
@@ -28,6 +29,7 @@ public class Game extends JPanel {
         xSpawn = 2; ySpawn =3;
         xEnd = 23; yEnd = 21;
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
+        gameGUI = new GameGUI(1000,0,1000,1500,10,50);
     } // end of constructor
     
     
@@ -42,6 +44,8 @@ public class Game extends JPanel {
         grid.draw(g2);
         g2.setColor(new Color(0xff0000));
         g2.drawRect(0,0,1000,1000);
+        gameGUI.draw(g2);
+        System.out.println("Drawing");
     } // end of paintComponent()
 
     //Method from Blase Cindric

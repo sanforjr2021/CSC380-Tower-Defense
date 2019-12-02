@@ -27,11 +27,11 @@ public class Grid {
             }
         }
         //generate road - currently does an L shape pattern
-        for(int y = ySpawn; y < yEnd; y++){
-            tileArray[xEnd][y] = new RoadTile(xEnd, y);
-        }
         for (int x = xSpawn; x < xEnd; x++){
-            tileArray[x][ySpawn] = new RoadTile(x, ySpawn);
+            tileArray[x][yEnd] = new RoadTile(x, yEnd);
+        }
+        for(int y = ySpawn; y < yEnd; y++){
+            tileArray[xSpawn][y] = new RoadTile(xSpawn, y);
         }
 
         //plot final tiles
