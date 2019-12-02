@@ -9,8 +9,8 @@ public class Tile {
     private Integer x, y;
 
     public Tile(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+        this.x = x*WIDTH;
+        this.y = y*HEIGHT;
     }
 
     public static Integer getWIDTH() {
@@ -30,10 +30,10 @@ public class Tile {
     }
 
     public void draw(Graphics2D g2){
-        g2.setColor(new Color(0x465A5A));
+        g2.setColor(new Color(0x4C5553));
         g2.fillRect(x,y,WIDTH,HEIGHT);
         //set a border around the shape
-        g2.setColor(new Color(0x445544));
+        g2.setColor(new Color(0x59898A));
         g2.drawRect(x,y,WIDTH,HEIGHT);
     }
 }

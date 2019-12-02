@@ -1,5 +1,7 @@
 package sanforjr2021;
 
+import sanforjr2021.tile.Grid;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.*;
@@ -14,12 +16,17 @@ public class Game extends JPanel {
     private float pixelSize;
     private Integer desiredWindowWidth = 1500;
     private Integer desiredWindowHeight = 1000;
+    private Integer xSpawn, ySpawn, xEnd, yEnd;
+    private Grid grid;
     // constructor method from Blase Cindric
     public Game() {
         setPreferredSize(new Dimension(desiredWindowWidth, desiredWindowHeight));
         setName("Tower Defense -Sanford J.");
         setUp();
         setBackground(Color.BLACK);
+        xSpawn = 0; ySpawn =0;
+        xEnd = 24; yEnd = 24;
+        grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
     } // end of constructor
     
     
@@ -31,12 +38,14 @@ public class Game extends JPanel {
         //set cords to use world cords for project.
         AffineTransform originalDeviceCoords = g2.getTransform();
         pixelSize = applyWorldToDeviceTransformation(g2, 0, 1500, 0, 1000);
+        grid.draw(g2);
+        g2.setColor(new Color(0xff0000));
+        g2.drawRect(0,0,1000,1000);
     } // end of paintComponent()
 
     //Method from Blase Cindric
     private float applyWorldToDeviceTransformation(Graphics2D g2,
             double left, double right, double bottom, double top) {
-            
             return applyWorldToDeviceTransformation(g2, left, right, bottom, top,
                                                  0, getWidth(), 0, getHeight());
     } // end of applyWorldToDeviceTransformation()

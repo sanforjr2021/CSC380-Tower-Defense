@@ -15,7 +15,9 @@ public class RoadTile extends Tile{
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.setColor(new Color(0x3E3F3D));
+        g2.setColor(new Color(0xDFDFFF));
+        g2.fillRect(getY(),getX(),getWIDTH(),getHEIGHT());
+        g2.setColor(new Color(0x59898A));
         g2.fillRect(getY(),getX(),getWIDTH(),getHEIGHT());
         switch(type){
             case "spawn":
@@ -27,6 +29,7 @@ public class RoadTile extends Tile{
                 g2.fillOval(getX(),getY(),getWIDTH(),getHEIGHT());
                 break;
             default:
+                //do nothing. This is a normal road
                 break;
         }
     }
