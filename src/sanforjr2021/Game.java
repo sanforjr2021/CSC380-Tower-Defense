@@ -24,8 +24,9 @@ public class Game extends JPanel {
         setName("Tower Defense -Sanford J.");
         setUp();
         setBackground(Color.BLACK);
-        xSpawn = 0; ySpawn =0;
-        xEnd = 24; yEnd = 24;
+        //Remember 24 = 25th square. 0 = 1st square.
+        xSpawn = 2; ySpawn =3;
+        xEnd = 23; yEnd = 21;
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
     } // end of constructor
     

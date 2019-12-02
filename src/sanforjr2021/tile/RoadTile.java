@@ -15,18 +15,18 @@ public class RoadTile extends Tile{
 
     @Override
     public void draw(Graphics2D g2) {
-        g2.setColor(new Color(0xDFDFFF));
-        g2.fillRect(getY(),getX(),getWIDTH(),getHEIGHT());
+        g2.setColor(new Color(0x606070));
+        g2.fillRect(getX(),getY(),getWIDTH(),getHEIGHT());
         g2.setColor(new Color(0x59898A));
-        g2.fillRect(getY(),getX(),getWIDTH(),getHEIGHT());
+        g2.drawRect(getX(),getY(),getWIDTH(),getHEIGHT());
         switch(type){
             case "spawn":
                 g2.setColor(new Color(0x8F1800));
-                g2.fillOval(getX(),getY(),getWIDTH(),getHEIGHT());
+                g2.fillRect(getX()+4,getY()+4,getWIDTH()-8,getHEIGHT()-8);
                 break;
             case "home":
                 g2.setColor(new Color(0x248F1E));
-                g2.fillOval(getX(),getY(),getWIDTH(),getHEIGHT());
+                g2.fillOval(getX()+4,getY()+4,getWIDTH()-8,getHEIGHT()-8);
                 break;
             default:
                 //do nothing. This is a normal road

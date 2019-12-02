@@ -30,10 +30,10 @@ public class Tile {
     }
 
     public void draw(Graphics2D g2){
-        g2.setColor(new Color(0x4C5553));
+        g2.setColor(new Color(0x343A39));
         g2.fillRect(x,y,WIDTH,HEIGHT);
         //set a border around the shape
-        g2.setColor(new Color(0x59898A));
+        g2.setColor(new Color(0x3B595A));
         g2.drawRect(x,y,WIDTH,HEIGHT);
     }
 }
