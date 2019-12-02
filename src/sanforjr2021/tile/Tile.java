@@ -1,6 +1,5 @@
 package sanforjr2021.tile;
 
-import org.jetbrains.annotations.Contract;
 
 import java.awt.*;
 
@@ -14,12 +13,10 @@ public class Tile {
         this.y = y;
     }
 
-    @Contract(pure = true)
     public static Integer getWIDTH() {
         return WIDTH;
     }
 
-    @Contract(pure = true)
     public static Integer getHEIGHT() {
         return HEIGHT;
     }
