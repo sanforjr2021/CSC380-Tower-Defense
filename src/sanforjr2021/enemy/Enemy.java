@@ -24,13 +24,14 @@ public class Enemy {
     }
     //other methods
     public void draw(Graphics2D g2){
-        g2.setColor(Color.red);
+        g2.setColor(new Color(0xff4444));
         g2.fillOval(x,y,WIDTH, HEIGHT);
         //Health bar
-        g2.drawRect(x,y-6, WIDTH,4);
+        g2.setColor(Color.RED);
+        g2.fillRect(x,y+ HEIGHT, WIDTH,4);
         g2.setColor(Color.GREEN);
         int healthBarWidth = (int)WIDTH* (health/totalHealth);
-        g2.drawRect(x, y-6, healthBarWidth, 4);
+        g2.fillRect(x, y+HEIGHT, healthBarWidth, 4);
     }
     //getters and setters
     public Integer getX() {

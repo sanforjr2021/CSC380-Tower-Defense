@@ -1,5 +1,6 @@
 package sanforjr2021;
 
+import sanforjr2021.enemy.EnemyList;
 import sanforjr2021.tile.Grid;
 
 import java.awt.*;
@@ -19,7 +20,9 @@ public class Game extends JPanel {
     private Integer xSpawn, ySpawn, xEnd, yEnd;
     private Grid grid;
     private GameGUI gameGUI;
-    // constructor method from Blase Cindric
+    private EnemyList enemyList;
+
+
     public Game() {
         setPreferredSize(new Dimension(desiredWindowWidth, desiredWindowHeight));
         setName("Tower Defense -Sanford J.");
@@ -29,11 +32,12 @@ public class Game extends JPanel {
         xSpawn = 2; ySpawn =3;
         xEnd = 23; yEnd = 21;
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
+        enemyList = new EnemyList(xSpawn,ySpawn, xEnd, yEnd);
+        enemyList.generateEnemies(1,4);
         gameGUI = new GameGUI(1000,0,1000,1500,10,50);
     } // end of constructor
-    
-    
-    
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -42,20 +46,18 @@ public class Game extends JPanel {
         AffineTransform originalDeviceCoords = g2.getTransform();
         pixelSize = applyWorldToDeviceTransformation(g2, 0, 1500, 0, 1000);
         grid.draw(g2);
-        g2.setColor(new Color(0xff0000));
-        g2.drawRect(0,0,1000,1000);
         gameGUI.draw(g2);
-        System.out.println("Drawing");
+        enemyList.draw(g2);
     } // end of paintComponent()
-
-    //Method from Blase Cindric
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //Methods from Blase Cindric
+    /////////////////////////////////////////////////////////////////////////////
     private float applyWorldToDeviceTransformation(Graphics2D g2,
             double left, double right, double bottom, double top) {
             return applyWorldToDeviceTransformation(g2, left, right, bottom, top,
                                                  0, getWidth(), 0, getHeight());
     } // end of applyWorldToDeviceTransformation()
 
-    //Method from Blase Cindric
     private float applyWorldToDeviceTransformation(Graphics2D g2,
             double left, double right, double bottom, double top, int pxMin,
             int pxMax, int pyMin, int pyMax) {
@@ -74,8 +76,7 @@ public class Game extends JPanel {
         // return pixel size in world coords
         return (float) Math.max(pixelWidth,pixelHeight);
     } // end of applyWorldToDeviceTransformation()
-    
-    
+
     /***********************************************
      * Do NOT change or delete anything below here!
      * Method from Blase Cindric
