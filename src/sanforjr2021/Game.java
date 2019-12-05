@@ -2,10 +2,14 @@ package sanforjr2021;
 
 import sanforjr2021.enemy.EnemyList;
 import sanforjr2021.tile.Grid;
+import sanforjr2021.tile.Tile;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.*;
+import java.util.EventListener;
 import java.util.Random;
 
 /*
@@ -14,7 +18,7 @@ Created Date: 11/21/19
 Purpose: Create a tower defense game.
 File originally created by Blase Cindric at the University of Mount Union as Lab3x.html for CSC 380 course.
  */
-public class Game extends JPanel implements Runnable{
+public class Game extends JPanel implements Runnable, MouseListener {
     public static final Random RANGEN = new Random();
     private float pixelSize;
     private Integer desiredWindowWidth = 1500;
@@ -31,6 +35,8 @@ public class Game extends JPanel implements Runnable{
         setUp();
         setBackground(Color.BLACK);
         gameGUI = new GameGUI(1000,0,1000,1500,10,50);
+        //Setup Mouse Listener
+        addMouseListener(this);
         //Remember 24 = 25th square. 0 = 1st square.
         xSpawn = 2; ySpawn =3;
         xEnd = 23; yEnd = 21;
@@ -39,8 +45,7 @@ public class Game extends JPanel implements Runnable{
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
         enemyList = new EnemyList(xSpawn,ySpawn, xEnd, yEnd);
         enemyList.generateEnemies(1,1);
-
-        //start thread
+        //start thread to run the game.
         run();
 
     } // end of constructor
@@ -64,6 +69,70 @@ public class Game extends JPanel implements Runnable{
         enemyList.moveEnemies(); // moves enemies
         gameGUI.subtractLives(enemyList.checkForCapture()); //removes enemies and calculates hearts left
         gameGUI.addGold(enemyList.checkForDeadEnemies()); // remove dead enemies and adds gold
+    }
+
+    @Override
+    public void run() {
+        int timer = 0;
+        while(true){
+            if(gameGUI.getLives() < 1){
+                System.out.println("Game Lost");
+                repaint();
+                return; //kills for loop
+            }
+            else {
+                timer++;
+                gameCalculations();
+                repaint();
+                if (timer % 300 == 0) {
+                    gameDifficulty *= 1.0 + (((double)(RANGEN.nextInt(20) + 1)) / 100); //multiplies game difficulty by 1.01 to 1.20 every 15 seconds
+                    System.out.println("Game Difficulty Updated: New Difficulty is: " + gameDifficulty);
+                }
+                if (timer % 50 == 0) {
+                    enemyList.generateEnemies(RANGEN.nextInt((int) (1 + gameDifficulty)), (1 * gameDifficulty)); // spawn a new enemy every
+                }
+                try {
+                    Thread.sleep(50); // updates every 1/20 of a second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+//////////////////////////////////////////////////////////////
+//Mouse Listener
+//////////////////////////////////////////////////////////////
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int xCord = (e.getX() / Tile.getWIDTH());
+        int yCord = (Math.abs(e.getY()-this.getHeight()) /Tile.getHEIGHT());
+        try{
+            grid.setSelectedTile(xCord, yCord);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            //TODO: Put in upgrade options as this selects the GUI
+        }
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////
     //Methods from Blase Cindric
@@ -108,27 +177,6 @@ public class Game extends JPanel implements Runnable{
     }
 
     public static void main(String args[]){new Game();}
-
-    @Override
-    public void run() {
-        int timer = 0;
-        while(true){
-            timer++;
-            gameCalculations();
-            repaint();
-            if(timer%400 == 0){
-                gameDifficulty *= gameDifficulty +((RANGEN.nextInt(25)+1)/100); //multiplies game difficulty by 1.01 to 1.25 every 10 seconds
-            }
-            if(timer%50 == 0) {
-                enemyList.generateEnemies(RANGEN.nextInt((int) (1 + gameDifficulty) ), (1 * gameDifficulty)); // spawn a new enemy every
-            }
-            try {
-                Thread.sleep(50); // updates every 1/20 of a second
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 } // end of class LabX3
 
 

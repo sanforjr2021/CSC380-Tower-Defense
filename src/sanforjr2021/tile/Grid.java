@@ -6,7 +6,7 @@ public class Grid {
     private Tile[][] tileArray;
     private Integer x,y;
     private Integer xSpawn, ySpawn, xEnd, yEnd;
-
+    private Tile selectedTile = null;
     public Grid(Integer x, Integer y, Integer xSpawn, Integer ySpawn, Integer xEnd, Integer yEnd) {
         this.x = x;
         this.y = y;
@@ -58,15 +58,20 @@ public class Grid {
         for(int x = 0; x < this.x; x++) {
             for (int y = 0; y < this.y; y++) {
                 tileArray[x][y].draw(g2);
+                }
             }
+        if(selectedTile != null){
+            selectedTile.drawAsSelected(g2);
         }
     }
 
     public Tile getTile(int x, int y){
         return tileArray[x][y];
     }
-
-    public void replaceTile(int x, int y, Tile tile){
-        tileArray[x][y] = tile;
+    public void setSelectedTile(int x, int y){
+        selectedTile = tileArray[x][y];
+    }
+    public Tile getSelectedTile(){
+        return selectedTile;
     }
 }

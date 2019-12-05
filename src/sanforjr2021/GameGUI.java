@@ -7,7 +7,6 @@ import java.awt.geom.Point2D;
 
 public class GameGUI {
     private Integer x, y, width, height, lives, gold;
-    private Boolean lost = false;
     public GameGUI(Integer x, Integer y, Integer width, Integer height, Integer lives, Integer gold) {
         this.x = x;
         this.y = y;
@@ -28,25 +27,23 @@ public class GameGUI {
         g2.translate(x,y);
         g2.setFont(new Font("impact", 1, 32));
         g2.setColor(Color.red);
-        g2.drawString("Lives: " + lives, 10, 32);
+        if(lives < 1){
+            g2.drawString("Game Over", 10, 32);
+        }
+        else {
+            g2.drawString("Lives: " + lives, 10, 32);
+        }
         g2.setColor(Color.ORANGE);
         g2.drawString("Gold: " + gold, 10, 64);
         g2.setTransform(originalTransform);
     }
     //getters & setters
-    public Boolean getLost() {
-        return lost;
-    }
-
     public Integer getLives() {
         return lives;
     }
 
     public void subtractLives(Integer lives) {
         this.lives -= lives;
-        if(lives == 0){
-            lost = true;
-        }
     }
 
     public Integer getGold() {

@@ -36,4 +36,8 @@ public class Tile {
         g2.setColor(new Color(0x3B595A));
         g2.drawRect(x,y,WIDTH,HEIGHT);
     }
+    public void drawAsSelected(Graphics2D g2){
+        g2.setColor(new Color(255,255,0,100));
+        g2.fillRect(x,y,WIDTH,HEIGHT);
+    }
 }
