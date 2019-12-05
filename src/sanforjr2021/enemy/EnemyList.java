@@ -4,6 +4,7 @@ import sanforjr2021.tile.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
+import static sanforjr2021.Game.RANGEN;
 
 public class EnemyList {
     private Integer xSpawn, ySpawn, xEnd, yEnd;
@@ -16,14 +17,20 @@ public class EnemyList {
         this.yEnd = yEnd*Tile.getHEIGHT();
         enemies = new ArrayList<Enemy>();
     }
-    public void generateEnemies(int num, int health){
-        enemies.add(new Enemy(xSpawn, ySpawn, health));
+    public void generateEnemies(int num, double health){
+        for(int i = 0; i < num; i++){
+            enemies.add(new Enemy(
+                    RANGEN.nextInt(21)-10 + xSpawn + Tile.getWIDTH()/4,
+                    RANGEN.nextInt(30)-15 + ySpawn,
+                    health));
+        }
+
+
     }
     public Integer checkForCapture(){
         int damageTaken = 0;
-        for(int i = 0; i > enemies.size(); i++){
-            if((xEnd < enemies.get(i).getX() && yEnd < enemies.get(i).getY()) ||
-                    (xEnd + Tile.getWIDTH() > enemies.get(i).getX() && yEnd + Tile.getHEIGHT()> enemies.get(i).getY())){
+        for(int i = 0; i < enemies.size(); i++){
+            if((xEnd < enemies.get(i).getX() && yEnd < enemies.get(i).getY())){
                 enemies.remove(i);
                 damageTaken++;
             }
@@ -33,12 +40,22 @@ public class EnemyList {
     public void moveEnemies(){
         for(int i = 0; i < enemies.size(); i++){
             if(enemies.get(i).getY() < yEnd + 10){
-                enemies.get(i).addY(-1);
+                enemies.get(i).addY(1);
             }
             else if(enemies.get(i).getX() < xEnd + 10){
                 enemies.get(i).addX(1);
             }
         }
+    }
+    public Integer checkForDeadEnemies(){
+        int gold = 0;
+        for(int i = 0; i < enemies.size(); i++){
+            if(enemies.get(i).getHealth() <= 0){
+                gold += enemies.get(i).getGold();
+                enemies.remove(i);
+            }
+        }
+        return gold;
     }
     public void draw(Graphics2D g2){
         for( int i = 0; i < enemies.size(); i++){

@@ -3,24 +3,17 @@ package sanforjr2021.enemy;
 import java.awt.*;
 
 public class Enemy {
-    private Integer x,y, health, gold, totalHealth;
+    private Integer x,y, gold;
+    private Double health, totalHealth;
     private static final Integer WIDTH = 20;
     private static final Integer HEIGHT= 20;
 
-    public Enemy(Integer x, Integer y, Integer health, Integer gold) {
+    public Enemy(Integer x, Integer y, Double health) {
         this.x = x;
         this.y = y;
         this.health = health;
         totalHealth = health;
-        this.gold = gold;
-    }
-
-    public Enemy(Integer x, Integer y, Integer health) {
-        this.x = x;
-        this.y = y;
-        this.health = health;
-        totalHealth = health;
-        gold = totalHealth/5;
+        gold = (int)(totalHealth/5);
     }
     //other methods
     public void draw(Graphics2D g2){
@@ -30,7 +23,7 @@ public class Enemy {
         g2.setColor(Color.RED);
         g2.fillRect(x,y+ HEIGHT, WIDTH,4);
         g2.setColor(Color.GREEN);
-        int healthBarWidth = (int)WIDTH* (health/totalHealth);
+        int healthBarWidth = (int)(WIDTH* (health/totalHealth));
         g2.fillRect(x, y+HEIGHT, healthBarWidth, 4);
     }
     //getters and setters
@@ -50,11 +43,11 @@ public class Enemy {
         this.y += y;
     }
 
-    public Integer getHealth() {
+    public Double getHealth() {
         return health;
     }
 
-    public void loseHealth(Integer health) {
+    public void loseHealth(Double health) {
         this.health -= health;
     }
 

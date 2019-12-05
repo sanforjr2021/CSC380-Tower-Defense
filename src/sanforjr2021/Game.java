@@ -6,6 +6,7 @@ import sanforjr2021.tile.Grid;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.*;
+import java.util.Random;
 
 /*
 Author: Jacob Sanford
@@ -13,7 +14,8 @@ Created Date: 11/21/19
 Purpose: Create a tower defense game.
 File originally created by Blase Cindric at the University of Mount Union as Lab3x.html for CSC 380 course.
  */
-public class Game extends JPanel {
+public class Game extends JPanel implements Runnable{
+    public static final Random RANGEN = new Random();
     private float pixelSize;
     private Integer desiredWindowWidth = 1500;
     private Integer desiredWindowHeight = 1000;
@@ -21,22 +23,27 @@ public class Game extends JPanel {
     private Grid grid;
     private GameGUI gameGUI;
     private EnemyList enemyList;
-
+    private Double gameDifficulty;
 
     public Game() {
         setPreferredSize(new Dimension(desiredWindowWidth, desiredWindowHeight));
         setName("Tower Defense -Sanford J.");
         setUp();
         setBackground(Color.BLACK);
+        gameGUI = new GameGUI(1000,0,1000,1500,10,50);
         //Remember 24 = 25th square. 0 = 1st square.
         xSpawn = 2; ySpawn =3;
         xEnd = 23; yEnd = 21;
+        gameDifficulty = 1.0;
+        //Implement containers
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
         enemyList = new EnemyList(xSpawn,ySpawn, xEnd, yEnd);
-        enemyList.generateEnemies(1,4);
-        gameGUI = new GameGUI(1000,0,1000,1500,10,50);
-    } // end of constructor
+        enemyList.generateEnemies(1,1);
 
+        //start thread
+        run();
+
+    } // end of constructor
 
     @Override
     public void paintComponent(Graphics g) {
@@ -45,13 +52,22 @@ public class Game extends JPanel {
         //set cords to use world cords for project.
         AffineTransform originalDeviceCoords = g2.getTransform();
         pixelSize = applyWorldToDeviceTransformation(g2, 0, 1500, 0, 1000);
+        //Draw list
         grid.draw(g2);
-        gameGUI.draw(g2);
         enemyList.draw(g2);
+        gameGUI.draw(g2);
     } // end of paintComponent()
     ///////////////////////////////////////////////////////////////////////////////////////
+    //Game Mechanics Calculations
+    //////////////////////////////////////////////////////////////////////////////////////
+    public void gameCalculations(){
+        enemyList.moveEnemies(); // moves enemies
+        gameGUI.subtractLives(enemyList.checkForCapture()); //removes enemies and calculates hearts left
+        gameGUI.addGold(enemyList.checkForDeadEnemies()); // remove dead enemies and adds gold
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////
     //Methods from Blase Cindric
-    /////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
     private float applyWorldToDeviceTransformation(Graphics2D g2,
             double left, double right, double bottom, double top) {
             return applyWorldToDeviceTransformation(g2, left, right, bottom, top,
@@ -93,6 +109,26 @@ public class Game extends JPanel {
 
     public static void main(String args[]){new Game();}
 
+    @Override
+    public void run() {
+        int timer = 0;
+        while(true){
+            timer++;
+            gameCalculations();
+            repaint();
+            if(timer%400 == 0){
+                gameDifficulty *= gameDifficulty +((RANGEN.nextInt(25)+1)/100); //multiplies game difficulty by 1.01 to 1.25 every 10 seconds
+            }
+            if(timer%50 == 0) {
+                enemyList.generateEnemies(RANGEN.nextInt((int) (1 + gameDifficulty) ), (1 * gameDifficulty)); // spawn a new enemy every
+            }
+            try {
+                Thread.sleep(50); // updates every 1/20 of a second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 } // end of class LabX3
 
 
