@@ -7,6 +7,7 @@ public class Tile {
     private static final Integer WIDTH = 40;  //stick as a constant to reduce memory usage
     private static final Integer HEIGHT = 40;
     private Integer x, y;
+    private String name = "Tile";
 
     public Tile(Integer x, Integer y) {
         this.x = x*WIDTH;
@@ -20,7 +21,12 @@ public class Tile {
     public static Integer getHEIGHT() {
         return HEIGHT;
     }
-
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return name;
+    }
     public Integer getX() {
         return x;
     }

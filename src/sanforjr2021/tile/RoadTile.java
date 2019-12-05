@@ -7,10 +7,12 @@ public class RoadTile extends Tile{
     public RoadTile(Integer x, Integer y, String type){
         super(x, y);
         this.type = type;
+        setName(type + " Tile");
     }
     public RoadTile(Integer x, Integer y){
         super(x,y);
         type = "road";
+        setName(type + " Tile");
     }
 
     @Override

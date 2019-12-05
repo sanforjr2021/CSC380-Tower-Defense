@@ -108,6 +108,10 @@ public class Game extends JPanel implements Runnable, MouseListener {
         int yCord = (Math.abs(e.getY()-this.getHeight()) /Tile.getHEIGHT());
         try{
             grid.setSelectedTile(xCord, yCord);
+            if(gameGUI.getGold() >= 20 && grid.getSelectedTile().getName().equals("Tile")){
+                gameGUI.subtractGold(20);
+                grid.placeTower(xCord,yCord);
+            }
         }
         catch(ArrayIndexOutOfBoundsException ex){
             //TODO: Put in upgrade options as this selects the GUI

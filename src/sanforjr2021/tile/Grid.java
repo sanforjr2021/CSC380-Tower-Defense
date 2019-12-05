@@ -74,4 +74,7 @@ public class Grid {
     public Tile getSelectedTile(){
         return selectedTile;
     }
+    public void placeTower(int x, int y){
+        tileArray[x][y] = new Tower(x,y);
+    }
 }
