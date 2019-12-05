@@ -1,5 +1,7 @@
 package sanforjr2021.enemy;
 
+import java.awt.*;
+
 public class Projectile {
     private Double damage;
     private Integer speed, x, y;
@@ -8,47 +10,30 @@ public class Projectile {
         this.damage = damage;
         this.x = x;
         this.y = y;
-        speed = 3;
+        speed = 2;
     }
-
     public Double getDamage() {
         return damage;
     }
 
-    public void setDamage(Double damage) {
-        this.damage = damage;
-    }
-
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
-    }
-
-    public Integer getX() {
-        return x;
-    }
-
-    public Integer getY() {
-        return y;
-    }
     public boolean findEnemy(int enemyX, int enemyY) {
+        if (y > enemyY-1  && y < enemyY + Enemy.getHEIGHT()+1 && enemyX-1 < x && enemyX + Enemy.getHEIGHT()+1 > x){
+            return true;
+        }
         if (x > enemyX) {
             x -= speed;
-        } else if (x < enemyX) {
+        } else if (x < enemyX+Enemy.getWIDTH()) {
             x += speed;
         }
         if (y > enemyY) {
             y -= speed;
-        } else if (y < enemyY) {
+        } else if (y < enemyY + Enemy.getHEIGHT()) {
             y += speed;
         }
-        //TODO:calculate if projectile is on target
-        if (y > enemyY){
-            //return true
-        }
         return false;
+    }
+    public void draw(Graphics2D g2){
+        g2.setColor(Color.ORANGE);
+        g2.fillOval(x-1,y-1,3,3);
     }
 }

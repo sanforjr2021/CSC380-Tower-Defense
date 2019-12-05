@@ -1,29 +1,55 @@
 package sanforjr2021.tile;
 
+import sanforjr2021.enemy.Projectile;
+
 import java.awt.*;
 
 public class Tower extends Tile{
     private Integer level, upgradeCost;
-    private Double damage, radius, fireRate;
+    private Double damage, radius;
     private Integer centerX, centerY;
 
     public Tower(Integer x, Integer y) {
         super(x, y);
         this.damage = 1.0; //damage dealt to a target
-        this.radius = 2.5; //radius it can attack a target in tiles
-        this.fireRate = 1.0; //shots per second
-        this.level = 0; //overall level
+        this.radius = 3.5; //radius it can attack a target in tiles
+        this.level = 1; //overall level
         this.upgradeCost = 25;
         centerX = this.getX()+getWIDTH()/2;
         centerY = this.getY()+getHEIGHT()/2;
         setName("Tower(Level "+ level + ")");
+    }
+    public Projectile createProjectile(){
+        return new Projectile(damage, centerX, centerY);
+    }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public Integer getUpgradeCost() {
+        return upgradeCost;
+    }
+
+    public Double getDamage() {
+        return damage;
+    }
+
+    public Double getRadius() {
+        return radius;
+    }
+
+    public Integer getCenterX() {
+        return centerX;
+    }
+
+    public Integer getCenterY() {
+        return centerY;
     }
 
     public void upgradeTower(){
         level++;
         this.damage *=1.34;
-        this.fireRate *= 1.1;
         this.radius *= 1.34;
         upgradeCost = (int)(upgradeCost*1.34);
         setName("Tower(Level "+ level + ")");

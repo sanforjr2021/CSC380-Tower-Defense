@@ -66,13 +66,10 @@ public class Game extends JPanel implements Runnable, MouseListener {
     //Game Mechanics Calculations
     //////////////////////////////////////////////////////////////////////////////////////
     public void gameCalculations(){
+        enemyList.moveProjectiles(); //check for enemies alive
         enemyList.moveEnemies(); // moves enemies
         gameGUI.subtractLives(enemyList.checkForCapture()); //removes enemies and calculates hearts left
         gameGUI.addGold(enemyList.checkForDeadEnemies()); // remove dead enemies and adds gold
-    }
-    public void haveTowersAttackEnemies(){
-        //find towers
-        //for loop checking if they'e in the radius
     }
     @Override
     public void run() {
@@ -88,11 +85,14 @@ public class Game extends JPanel implements Runnable, MouseListener {
                 gameCalculations();
                 repaint();
                 if (timer % 300 == 0) {
-                    gameDifficulty *= 1.0 + (((double)(RANGEN.nextInt(20) + 1)) / 100); //multiplies game difficulty by 1.01 to 1.20 every 15 seconds
-                    System.out.println("Game Difficulty Updated: New Difficulty is: " + gameDifficulty);
+                    gameDifficulty *= 1.0 + (((double)(RANGEN.nextInt(10) + 1)) / 100); //multiplies game difficulty by 1.01 to 1.20 every 15 seconds
                 }
                 if (timer % 50 == 0) {
                     enemyList.generateEnemies(RANGEN.nextInt((int) (1 + gameDifficulty)), (1 * gameDifficulty)); // spawn a new enemy every
+                }
+                if(timer% 15 == 0){
+                    enemyList.createProjectiles(grid.getTowers()); //adds new projectiles when possible every second
+
                 }
                 try {
                     Thread.sleep(50); // updates every 1/20 of a second

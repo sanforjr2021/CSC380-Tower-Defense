@@ -1,22 +1,30 @@
 package sanforjr2021.enemy;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Enemy {
     private Integer x,y, gold;
     private Double health, totalHealth;
     private static final Integer WIDTH = 20;
     private static final Integer HEIGHT= 20;
+    private ArrayList<Projectile> projectiles;
 
     public Enemy(Integer x, Integer y, Double health) {
         this.x = x;
         this.y = y;
         this.health = health;
         totalHealth = health;
-        gold = (int)(totalHealth/5);
+        gold = (int)(totalHealth/5)+1;
+        projectiles = new ArrayList<Projectile>();
+
     }
     //other methods
     public void draw(Graphics2D g2){
+        //Draw projectiles
+        for(Projectile projectile: projectiles){
+            projectile.draw(g2);
+        }
         g2.setColor(new Color(0xff4444));
         g2.fillOval(x,y,WIDTH, HEIGHT);
         //Health bar
@@ -47,9 +55,6 @@ public class Enemy {
         return health;
     }
 
-    public void loseHealth(Double health) {
-        this.health -= health;
-    }
 
     public Integer getGold() {
         return gold;
@@ -63,7 +68,18 @@ public class Enemy {
         return HEIGHT;
     }
 
-    public void addProjectile(){
-        //TODO: Add Projectiles
+    public void addProjectile(Projectile projectile){
+        projectiles.add(projectile);
+    }
+    public void moveProjectiles(){
+        if(projectiles.size() == 0){
+            return;
+        }
+        for(int i = 0; i < projectiles.size(); i++){
+            if(projectiles.get(i).findEnemy(x,y)){
+                health -= projectiles.get(i).getDamage();
+                projectiles.remove(projectiles.get(i));
+            }
+        }
     }
 }

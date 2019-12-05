@@ -1,6 +1,7 @@
 package sanforjr2021.tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Grid {
     private Tile[][] tileArray;
@@ -17,6 +18,17 @@ public class Grid {
         this.yEnd = yEnd;
         tileArray = new Tile[x][y];
         generateGrid();
+    }
+    public ArrayList<Tower> getTowers(){
+        ArrayList<Tower> towers = new ArrayList<Tower>();
+        for(int x = 0; x < this.x; x++){
+            for(int y = 0; y < this.y; y++){
+                if(tileArray[x][y].getName().contains("Tower")){
+                    towers.add((Tower) tileArray[x][y]);
+                }
+            }
+        }
+        return  towers;
     }
 
     public void generateGrid(){
