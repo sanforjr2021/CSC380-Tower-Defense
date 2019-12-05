@@ -70,7 +70,10 @@ public class Game extends JPanel implements Runnable, MouseListener {
         gameGUI.subtractLives(enemyList.checkForCapture()); //removes enemies and calculates hearts left
         gameGUI.addGold(enemyList.checkForDeadEnemies()); // remove dead enemies and adds gold
     }
-
+    public void haveTowersAttackEnemies(){
+        //find towers
+        //for loop checking if they'e in the radius
+    }
     @Override
     public void run() {
         int timer = 0;
@@ -111,6 +114,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
             if(gameGUI.getGold() >= 20 && grid.getSelectedTile().getName().equals("Tile")){
                 gameGUI.subtractGold(20);
                 grid.placeTower(xCord,yCord);
+                grid.setSelectedTile(xCord,yCord); //force radius to update
             }
         }
         catch(ArrayIndexOutOfBoundsException ex){

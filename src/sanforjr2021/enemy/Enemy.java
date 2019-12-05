@@ -62,4 +62,8 @@ public class Enemy {
     public static Integer getHEIGHT() {
         return HEIGHT;
     }
+
+    public void addProjectile(){
+        //TODO: Add Projectiles
+    }
 }
