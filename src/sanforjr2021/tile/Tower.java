@@ -12,7 +12,7 @@ public class Tower extends Tile{
     public Tower(Integer x, Integer y) {
         super(x, y);
         this.damage = 1.0; //damage dealt to a target
-        this.radius = 3.5; //radius it can attack a target in tiles
+        this.radius = 2.5; //radius it can attack a target in tiles
         this.level = 1; //overall level
         this.upgradeCost = 25;
         centerX = this.getX()+getWIDTH()/2;
@@ -49,9 +49,9 @@ public class Tower extends Tile{
 
     public void upgradeTower(){
         level++;
-        this.damage *=1.34;
+        this.damage *=1.67;
         this.radius *= 1.34;
-        upgradeCost = (int)(upgradeCost*1.34);
+        upgradeCost = (int)(upgradeCost*1.25);
         setName("Tower(Level "+ level + ")");
     }
 
@@ -59,13 +59,21 @@ public class Tower extends Tile{
     public void draw(Graphics2D g2) {
         super.draw(g2);
         g2.setColor(Color.magenta);
-        g2.fillOval(getX(),getY(),getWIDTH(),getHEIGHT());
+        g2.fillOval(getX()+2,getY()+2,getWIDTH()-4,getHEIGHT()-4);
     }
 
     @Override
     public void drawAsSelected(Graphics2D g2) {
         super.drawAsSelected(g2);
         g2.setColor(new Color(255, 250, 0, 51));
-        g2.fillOval(centerX-(int)(getWIDTH()*radius/2), centerY-(int)(getHEIGHT()*radius/2), (int)(getWIDTH()*radius), (int)(getHEIGHT()*radius));
+        g2.fillOval(centerX-(int)(getWIDTH()*radius), centerY-(int)(getHEIGHT()*radius), (int)(getWIDTH()*radius*2), (int)(getHEIGHT()*radius*2));
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nDamage:"+ damage +
+                "\nRadius:" + radius+
+                "\nUpgrade Cost:" + upgradeCost;
     }
 }

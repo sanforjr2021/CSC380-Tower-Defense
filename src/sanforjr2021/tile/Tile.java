@@ -46,4 +46,9 @@ public class Tile {
         g2.setColor(new Color(255,255,0,100));
         g2.fillRect(x,y,WIDTH,HEIGHT);
     }
+
+    @Override
+    public String toString() {
+        return name + "\nLocation: (" + x/getWIDTH()+1 + ", " + y/getHEIGHT()+1+ ")";
+    }
 }

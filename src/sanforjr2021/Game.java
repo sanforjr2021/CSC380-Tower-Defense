@@ -3,6 +3,7 @@ package sanforjr2021;
 import sanforjr2021.enemy.EnemyList;
 import sanforjr2021.tile.Grid;
 import sanforjr2021.tile.Tile;
+import sanforjr2021.tile.Tower;
 
 import java.awt.*;
 import javax.swing.*;
@@ -45,6 +46,7 @@ public class Game extends JPanel implements Runnable, MouseListener {
         grid = new Grid(25, 25, xSpawn,ySpawn,xEnd,yEnd);
         enemyList = new EnemyList(xSpawn,ySpawn, xEnd, yEnd);
         enemyList.generateEnemies(1,1);
+        gameGUI.setDisplayString(grid.getSelectedTile().toString());
         //start thread to run the game.
         run();
 
@@ -115,12 +117,21 @@ public class Game extends JPanel implements Runnable, MouseListener {
                 gameGUI.subtractGold(20);
                 grid.placeTower(xCord,yCord);
                 grid.setSelectedTile(xCord,yCord); //force radius to update
-            }
-        }
-        catch(ArrayIndexOutOfBoundsException ex){
-            //TODO: Put in upgrade options as this selects the GUI
-        }
-
+            }//end of if
+            gameGUI.setDisplayString(grid.getSelectedTile().toString());
+        }//end of try
+        catch(ArrayIndexOutOfBoundsException ex){}
+        if(e.getX() >= 1010 && e.getX() <= 1130  && e.getY() >= 400 && e.getY() <= 480){ //check if on the upgrade button
+            try{
+                Tower tower = grid.getTowerFromCords(grid.getSelectedTile().getX()/Tile.getWIDTH(), grid.getSelectedTile().getY()/Tile.getWIDTH());
+                if(tower.getUpgradeCost() <= gameGUI.getGold()){ //check if they have enough gold to upgrade it
+                    gameGUI.subtractGold(tower.getUpgradeCost());
+                    tower.upgradeTower();
+                    grid.replaceTileWithTower(tower);
+                }//end of if
+            }//end of try
+            catch(Exception ex){}
+        }//end of if
     }
 
     @Override

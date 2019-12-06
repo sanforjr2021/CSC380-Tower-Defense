@@ -7,7 +7,7 @@ public class Grid {
     private Tile[][] tileArray;
     private Integer x,y;
     private Integer xSpawn, ySpawn, xEnd, yEnd;
-    private Tile selectedTile = null;
+    private Tile selectedTile;
     public Grid(Integer x, Integer y, Integer xSpawn, Integer ySpawn, Integer xEnd, Integer yEnd) {
         this.x = x;
         this.y = y;
@@ -18,6 +18,7 @@ public class Grid {
         this.yEnd = yEnd;
         tileArray = new Tile[x][y];
         generateGrid();
+        setSelectedTile(0,0);
     }
     public ArrayList<Tower> getTowers(){
         ArrayList<Tower> towers = new ArrayList<Tower>();
@@ -75,6 +76,12 @@ public class Grid {
         if(selectedTile != null){
             selectedTile.drawAsSelected(g2);
         }
+    }
+    public Tower getTowerFromCords(int x, int y){
+        return (Tower) tileArray[x][y];
+    }
+    public void replaceTileWithTower(Tower tower){
+        tileArray[tower.getX()][tower.getY()] = tower;
     }
 
     public Tile getTile(int x, int y){
