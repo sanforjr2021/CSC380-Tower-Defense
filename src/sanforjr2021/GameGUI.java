@@ -54,10 +54,6 @@ public class GameGUI {
         return lives;
     }
 
-    public String getDisplayString() {
-        return displayString;
-    }
-
     public void setDisplayString(String name) {
         this.displayString = name;
     }

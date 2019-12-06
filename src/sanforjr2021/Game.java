@@ -64,9 +64,9 @@ public class Game extends JPanel implements Runnable, MouseListener {
         enemyList.draw(g2);
         gameGUI.draw(g2);
     } // end of paintComponent()
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //Game Mechanics Calculations
-    //////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+//Game Mechanics Calculations
+//////////////////////////////////////////////////////////////////////////////////////
     public void gameCalculations(){
         enemyList.moveProjectiles(); //check for enemies alive
         enemyList.moveEnemies(); // moves enemies
@@ -195,7 +195,5 @@ public class Game extends JPanel implements Runnable, MouseListener {
         f.setVisible(true);    
     }
 
-    public static void main(String args[]){new Game();}
+    public static void main(String[] args){new Game();}
 } // end of class LabX3
-
-

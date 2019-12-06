@@ -23,16 +23,8 @@ public class Tower extends Tile{
         return new Projectile(damage, centerX, centerY);
     }
 
-    public Integer getLevel() {
-        return level;
-    }
-
     public Integer getUpgradeCost() {
         return upgradeCost;
-    }
-
-    public Double getDamage() {
-        return damage;
     }
 
     public Double getRadius() {
